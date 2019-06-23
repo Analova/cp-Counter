@@ -28,6 +28,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var user = {
+  name: "Jane",
+  age: 21,
+  location: "NY"
+};
+
+var newUser = Object.assign({}, user, {
+  name: "Marie"
+});
+
 var Counter = function (_Component) {
   _inherits(Counter, _Component);
 
@@ -51,15 +61,61 @@ var Counter = function (_Component) {
       });
     };
 
+    _this.counterRun = function () {
+      setInterval(function () {
+        _this.setState({
+          currentNumber: _this.state.currentNumber + 1
+        });
+      }, 1000);
+    };
+
     _this.state = {
+      status: "manual",
       currentNumber: 0
     };
     return _this;
   }
 
   _createClass(Counter, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      console.log("component will mont started");
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      if (this.props.status == "auto") {
+        this.setState({
+          status: this.props.status
+        }, function () {
+          _this2.counterRun();
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var styleCounterComp = {
+        with: "100%",
+        maxWidth: "400px",
+        margin: "0 auto"
+      };
+
+      var styleNumber = {
+        border: "3px solid black",
+        padding: "20px",
+        fontSize: "2rem",
+        fontWeight: "900",
+        textAlign: "center"
+
+      };
+
+      var styleButtons = {
+        display: this.props.status == "auto" ? "none" : "flex"
+
+      };
       return _react2.default.createElement(
         "div",
         { id: "counter-comp", style: styleCounterComp },
@@ -99,27 +155,6 @@ var Counter = function (_Component) {
 }(_react.Component);
 
 exports.default = Counter;
-
-
-var styleCounterComp = {
-  with: "100%",
-  maxWidth: "400px",
-  margin: "0 auto"
-};
-
-var styleNumber = {
-  border: "3px solid black",
-  padding: "20px",
-  fontSize: "2rem",
-  fontWeight: "900",
-  textAlign: "center"
-
-};
-
-var styleButtons = {
-  display: "flex"
-
-};
 
 /***/ }),
 
@@ -249,7 +284,7 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
-        _react2.default.createElement(_Counter2.default, null)
+        _react2.default.createElement(_Counter2.default, { status: 'menual' })
       );
     }
   }]);
