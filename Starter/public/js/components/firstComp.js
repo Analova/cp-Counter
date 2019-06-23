@@ -36,7 +36,24 @@ var Counter = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this));
 
-    _this.state = {};
+    _this.clickedAdd = function () {
+      console.log(_this.state);
+      _this.setState({
+        currentNumber: _this.state.currentNumber + 1
+      }, function () {
+        console.log(_this.state);
+      });
+    };
+
+    _this.clickedMinus = function () {
+      _this.setState({
+        currentNumber: _this.state.currentNumber - 1
+      });
+    };
+
+    _this.state = {
+      currentNumber: 0
+    };
     return _this;
   }
 
@@ -49,24 +66,28 @@ var Counter = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "Number", style: styleNumber },
-          "0"
+          this.state.currentNumber
         ),
         _react2.default.createElement(
           "div",
           { className: "buttons", style: styleButtons },
           _react2.default.createElement(
             _Button2.default,
-            { action: "minus",
+            {
+              action: "minus",
               fontColor: "white",
               hoverColor: "red",
-              backgroundColor: "black" },
+              backgroundColor: "black",
+              trigger: this.clickedMinus },
             "-"
           ),
           _react2.default.createElement(
             _Button2.default,
-            { action: "plus",
+            {
+              action: "plus",
               hoverColor: "purple",
-              backgroundColor: "white" },
+              backgroundColor: "white",
+              trigger: this.clickedAdd },
             "+"
           )
         )
@@ -166,7 +187,8 @@ var Button = function (_Component) {
         "div",
         { className: "button " + this.props.action, style: styleButton,
           onMouseEnter: this.toggleHover,
-          onMouseLeave: this.toggleHover },
+          onMouseLeave: this.toggleHover,
+          onClick: this.props.trigger },
         this.props.children
       );
     }

@@ -34,7 +34,8 @@ toggleHover =()=>{
 
   <div className={`button ${this.props.action}` } style={styleButton}
   onMouseEnter={this.toggleHover}
-  onMouseLeave={this.toggleHover}>
+  onMouseLeave={this.toggleHover}
+  onClick={this.props.trigger}>
 {this.props.children}
   </div>
 

@@ -6,22 +6,46 @@ import Button  from "./Button"
   constructor () {
     super()
     this.state = {
-
+     currentNumber:0
     }
   }
+clickedAdd=()=>{
+  console.log(this.state)
+  this.setState({
+    currentNumber: this.state.currentNumber +1
+  },
+()=>{
+    console.log(this.state)
+})
+}
 
+clickedMinus=()=>{
+  this.setState({
+    currentNumber: this.state.currentNumber -1
+  })
+}
   render () {
     return (
       <div id="counter-comp" style={styleCounterComp}>
-      <div className="Number" style={styleNumber}>0</div>
+      <div className="Number" style={styleNumber}>
+      { this.state.currentNumber}
+      </div>
       <div className="buttons" style={styleButtons}>
-      <Button  action="minus"
+      <Button
+      action="minus"
       fontColor="white"
       hoverColor="red"
-      backgroundColor="black">-</Button>
-      <Button   action="plus"
+      backgroundColor="black"
+      trigger={this.clickedMinus}>
+      -
+      </Button>
+      <Button
+      action="plus"
       hoverColor="purple"
-      backgroundColor="white">+</Button>
+      backgroundColor="white"
+      trigger={this.clickedAdd}>
+      +
+      </Button>
       </div>
       </div>
 )
